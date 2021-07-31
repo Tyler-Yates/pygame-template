@@ -45,9 +45,9 @@ class Player(Actor):
                     self.moving_right = True
 
     def update(self, time_delta: float):
-        if self.moving_left:
+        if self.moving_left and (self.pos_x > PLAYER_SIZE / 2):
             self.pos_x -= PLAYER_SPEED * time_delta
-        if self.moving_right:
+        if self.moving_right and (self.pos_x < GAME_WIDTH_PX - (PLAYER_SIZE / 2)):
             self.pos_x += PLAYER_SPEED * time_delta
 
     def render(self, screen: Surface):
