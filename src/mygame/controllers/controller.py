@@ -6,7 +6,6 @@ import pygame
 from src.mygame.controllers.scene_controller import SceneController
 from src.mygame.interfaces.overlay import Overlay
 from src.mygame.state.game_state import GameState
-from src.mygame.state.player_actor import PLAYER_OFFSET_FROM_BOTTOM, PLAYER_SIZE
 
 
 class Controller:
@@ -35,10 +34,6 @@ class Controller:
         self.clock = pygame.time.Clock()
 
         self.log.info(f"Starting game with resolution {self.width_px}x{self.height_px} at {self.fps} FPS")
-
-        # Start the player at the center of the bottom of the screen
-        self.game_state.player.pos_x = self.width_px / 2
-        self.game_state.player.pos_y = self.height_px - PLAYER_OFFSET_FROM_BOTTOM - PLAYER_SIZE
 
         # Use a boolean to know when to break out of the game loop
         self.quit_flag = False

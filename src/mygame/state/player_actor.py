@@ -4,6 +4,7 @@ import pygame
 from pygame import Surface
 from pygame.event import Event
 
+from src.mygame.constants.engine_constants import GAME_WIDTH_PX, GAME_HEIGHT_PX
 from src.mygame.interfaces.actor import Actor
 
 PLAYER_SIZE = 20
@@ -16,8 +17,9 @@ class Player(Actor):
     def __init__(self):
         super().__init__()
 
-        self.pos_x = 0.0
-        self.pos_y = 0.0
+        # Start the player at the center of the bottom of the screen
+        self.pos_x = GAME_WIDTH_PX / 2
+        self.pos_y = GAME_HEIGHT_PX - PLAYER_SIZE - PLAYER_OFFSET_FROM_BOTTOM
 
         self.moving_left = False
         self.moving_right = False
