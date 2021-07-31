@@ -9,7 +9,6 @@ from src.mygame.state.game_state import GameState
 from src.mygame.state.scene_state import SceneState
 from src.mygame.util.fonts import BASIC_FONT
 
-
 TOGGLE_HOTKEY = pygame.K_F12
 
 
