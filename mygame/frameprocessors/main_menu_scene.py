@@ -18,7 +18,9 @@ MAIN_MENU_TEXT_SIZE = 64
 
 
 class MainMenuScene(Scene):
-    """ Welcome screen of the game, the first one to be loaded."""
+    """
+    Main menu of the game.
+    """
 
     def __init__(self, game_state: GameState, scene_state: SceneState):
         super().__init__(game_state, scene_state)

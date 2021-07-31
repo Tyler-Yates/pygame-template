@@ -8,32 +8,34 @@ from mygame.state.game_state import GameState
 from mygame.state.scene_state import SceneState
 
 
-class Director:
-    """Represents the main object of the game.
+class Controller:
+    """
+    The main controller that orchestrates all the game pieces.
+    """
 
-    The Director object keeps the game on, and takes care of updating it,
-    drawing it and propagate events.
-
-    This object must be used with Scene objects that are defined later."""
-
-    def __init__(self, game_state: GameState, scene_state: SceneState, fps: int, width_px: int, height_px: int,
-                 overlays: List[Overlay]):
+    def __init__(self, game_name: str, game_state: GameState, scene_state: SceneState, fps: int, width_px: int,
+                 height_px: int, overlays: List[Overlay]):
         self.log = logging.getLogger(self.__class__.__name__)
-
+        self.game_name = game_name
         self.fps = fps
         self.width_px = width_px
         self.height_px = height_px
         self.game_state = game_state
         self.scene_state = scene_state
         self.overlays = overlays
+        self.clock = pygame.time.Clock()
 
         self.log.info(f"Starting game with resolution {self.width_px}x{self.height_px} at {self.fps} FPS")
 
-        self.quit_flag = False
-        self.clock = pygame.time.Clock()
+        # Start the player at the center of the screen
+        self.game_state.player.pos_x = self.width_px / 2
 
+        # Use a boolean to know when to break out of the game loop
+        self.quit_flag = False
+
+        # Set up the window
         self.screen = pygame.display.set_mode((self.width_px, self.height_px))
-        pygame.display.set_caption("Game Name")
+        pygame.display.set_caption(self.game_name)
 
     def loop(self):
         scene = self.scene_state.active_scene

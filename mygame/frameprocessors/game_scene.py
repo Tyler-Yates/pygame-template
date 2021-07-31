@@ -15,7 +15,9 @@ SCORE_TEXT_SIZE = 20
 
 
 class GameScene(Scene):
-    """ Welcome screen of the game, the first one to be loaded."""
+    """
+    Scene that handles actual gameplay.
+    """
 
     def __init__(self, game_state: GameState, scene_state: SceneState):
         super().__init__(game_state, scene_state)
