@@ -2,7 +2,6 @@ import logging
 from typing import List
 
 import pygame
-import math
 
 from src.mygame.controllers.scene_controller import SceneController
 from src.mygame.interfaces.overlay import Overlay
