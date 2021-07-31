@@ -1,4 +1,5 @@
 from src.mygame.constants.scene_enum import SceneEnum
+from src.mygame.frameprocessors.game_over_scene import GameOverScene
 from src.mygame.frameprocessors.game_scene import GameScene
 from src.mygame.frameprocessors.main_menu_scene import MainMenuScene
 from src.mygame.interfaces.scene import Scene
@@ -21,6 +22,8 @@ class SceneController:
             return MainMenuScene(self.game_state, self)
         if scene_id == SceneEnum.Game:
             return GameScene(self.game_state, self)
+        if scene_id == SceneEnum.GameOver:
+            return GameOverScene(self.game_state, self)
 
     def get_active_scene(self) -> Scene:
         return self.active_scene

@@ -51,7 +51,7 @@ class GameScene(Scene):
             asteroid.update(time_delta)
             asteroid_collision_polygon = asteroid.get_collision_polygon()
             if collides(player_collision_polygon, asteroid_collision_polygon):
-                self.scene_controller.change_active_scene(SceneEnum.MainMenu)
+                self.scene_controller.change_active_scene(SceneEnum.GameOver)
 
         if self.score_tick > 100:
             self.score_tick = 0
