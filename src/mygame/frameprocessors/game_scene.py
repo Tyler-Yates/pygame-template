@@ -5,7 +5,6 @@ from typing import List, TYPE_CHECKING
 from pygame import Surface
 from pygame.event import Event
 
-from src.mygame.constants.engine_constants import GAME_WIDTH_PX
 from src.mygame.constants.scene_enum import SceneEnum
 from src.mygame.interfaces.scene import Scene
 from src.mygame.state.asteroid_actor import Asteroid
@@ -80,8 +79,9 @@ class GameScene(Scene):
 
         # Only keep asteroids that have not gone too far below the screen.
         self.game_state.asteroids[:] = [
-            asteroid for asteroid in self.game_state.asteroids if
-            asteroid.pos_y < screen.get_height() + asteroid.size * 2
+            asteroid
+            for asteroid in self.game_state.asteroids
+            if asteroid.pos_y < screen.get_height() + asteroid.size * 2
         ]
 
         # Now render any asteroids left
