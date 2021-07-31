@@ -29,7 +29,7 @@ class MainMenuScene(Scene):
                 if event.key == pygame.K_RETURN:
                     self.scene_state.change_scene(GameScene(self.game_state, self.scene_state))
 
-    def update(self, time_delta: int):
+    def update(self, time_delta: float):
         pass
 
     def render(self, screen: Surface):

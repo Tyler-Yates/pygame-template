@@ -7,6 +7,8 @@ from pygame.event import Event
 PLAYER_SIZE = 20
 PLAYER_OFFSET_FROM_BOTTOM = 10
 
+PLAYER_SPEED = 120
+
 
 class PlayerState:
     pos_x: float = 0
@@ -28,11 +30,11 @@ class PlayerState:
                 elif event.key == pygame.K_RIGHT:
                     self.moving_right = True
 
-    def update(self, time_delta: int):
+    def update(self, time_delta: float):
         if self.moving_left:
-            self.pos_x -= 1
+            self.pos_x -= PLAYER_SPEED * time_delta
         if self.moving_right:
-            self.pos_x += 1
+            self.pos_x += PLAYER_SPEED * time_delta
 
     def draw_player(self, screen: Surface):
         pos_y = screen.get_height() - PLAYER_OFFSET_FROM_BOTTOM - PLAYER_SIZE

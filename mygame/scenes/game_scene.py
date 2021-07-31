@@ -24,7 +24,7 @@ class GameScene(Scene):
     def process_input(self, events: List[Event]):
         self.game_state.player.handle_events(events)
 
-    def update(self, time_delta: int):
+    def update(self, time_delta: float):
         self.game_state.player.update(time_delta)
 
     def render(self, screen: Surface):

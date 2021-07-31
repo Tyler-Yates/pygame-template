@@ -1,9 +1,13 @@
+import logging
+
 import pygame
 
 from mygame.controllers.director import Director
 from mygame.scenes.main_menu_scene import MainMenuScene
 from mygame.state.game_state import GameState
 from mygame.state.scene_state import SceneState
+
+logging.basicConfig(level=logging.INFO)
 
 GAME_FPS = 60
 GAME_WIDTH_PX = 1024
