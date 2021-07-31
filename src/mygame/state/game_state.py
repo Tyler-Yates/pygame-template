@@ -1,6 +1,8 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import List
 
-from src.mygame.state.player_state import PlayerState
+from src.mygame.state.asteroid_actor import Asteroid
+from src.mygame.state.player_actor import Player
 
 
 @dataclass
@@ -12,4 +14,5 @@ class GameState:
     level: int = 1
     score: int = 0
 
-    player: PlayerState = PlayerState()
+    player: Player = Player()
+    asteroids: List[Asteroid] = field(default_factory=list)

@@ -1,10 +1,10 @@
-from ...mygame.state.player_state import PlayerState
+from ...mygame.state.player_actor import Player
 
 
 class TestPlayerState:
     def test_movement_fps(self):
         """We want to ensure that movement is not affected by FPS."""
-        player = PlayerState()
+        player = Player()
 
         player.moving_left = True
 
