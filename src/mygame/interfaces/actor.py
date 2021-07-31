@@ -1,7 +1,7 @@
 from abc import ABC
+from typing import List
 
 from pygame.surface import Surface
-from shapely.geometry import Polygon
 
 
 class Actor(ABC):
@@ -12,7 +12,7 @@ class Actor(ABC):
     def __init__(self):
         pass
 
-    def get_collision_polygon(self) -> Polygon:
+    def get_collision_polygon(self) -> List[List[float]]:
         """
         Called in order to check for collisions.
 

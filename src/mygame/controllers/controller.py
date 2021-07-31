@@ -3,9 +3,10 @@ from typing import List
 
 import pygame
 
+from src.mygame.controllers.scene_controller import SceneController
 from src.mygame.interfaces.overlay import Overlay
 from src.mygame.state.game_state import GameState
-from src.mygame.state.scene_state import SceneState
+from src.mygame.state.player_actor import PLAYER_OFFSET_FROM_BOTTOM, PLAYER_SIZE
 
 
 class Controller:
@@ -17,7 +18,7 @@ class Controller:
         self,
         game_name: str,
         game_state: GameState,
-        scene_state: SceneState,
+        scene_controller: SceneController,
         fps: int,
         width_px: int,
         height_px: int,
@@ -29,14 +30,15 @@ class Controller:
         self.width_px = width_px
         self.height_px = height_px
         self.game_state = game_state
-        self.scene_state = scene_state
+        self.scene_controller = scene_controller
         self.overlays = overlays
         self.clock = pygame.time.Clock()
 
         self.log.info(f"Starting game with resolution {self.width_px}x{self.height_px} at {self.fps} FPS")
 
-        # Start the player at the center of the screen
+        # Start the player at the center of the bottom of the screen
         self.game_state.player.pos_x = self.width_px / 2
+        self.game_state.player.pos_y = self.height_px - PLAYER_OFFSET_FROM_BOTTOM - PLAYER_SIZE
 
         # Use a boolean to know when to break out of the game loop
         self.quit_flag = False
@@ -46,7 +48,7 @@ class Controller:
         pygame.display.set_caption(self.game_name)
 
     def loop(self):
-        scene = self.scene_state.active_scene
+        scene = self.scene_controller.get_active_scene()
         while not self.quit_flag:
             millis_since_last_frame = self.clock.tick(self.fps)
             time_delta = float(millis_since_last_frame) / 1000.0
@@ -75,7 +77,7 @@ class Controller:
                 overlay.render(self.screen)
 
             # We do not want to change scenes mid-frame so wait until the end of the frame to change scenes
-            scene = self.scene_state.get_active_scene()
+            scene = self.scene_controller.get_active_scene()
 
             pygame.display.flip()
 

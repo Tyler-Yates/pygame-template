@@ -1,15 +1,18 @@
 import logging
-import math
-from typing import List
+from typing import List, TYPE_CHECKING
 
 from pygame import Surface
 from pygame.event import Event
 
+from src.mygame.constants.scene_enum import SceneEnum
 from src.mygame.interfaces.scene import Scene
 from src.mygame.state.asteroid_actor import Asteroid
 from src.mygame.state.game_state import GameState
-from src.mygame.state.scene_state import SceneState
+from src.mygame.util.collisions import collides
 from src.mygame.util.fonts import BASIC_FONT
+
+if TYPE_CHECKING:
+    from src.mygame.controllers.scene_controller import SceneController
 
 BACKGROUND_COLOR = (50, 50, 50)
 
@@ -22,8 +25,8 @@ class GameScene(Scene):
     Scene that handles actual gameplay.
     """
 
-    def __init__(self, game_state: GameState, scene_state: SceneState):
-        super().__init__(game_state, scene_state)
+    def __init__(self, game_state: GameState, scene_controller: "SceneController"):
+        super().__init__(game_state, scene_controller)
 
         self.log = logging.getLogger(self.__class__.__name__)
 
@@ -36,8 +39,13 @@ class GameScene(Scene):
     def update(self, time_delta: float):
         self.game_state.player.update(time_delta)
 
+        player_collision_polygon = self.game_state.player.get_collision_polygon()
+
         for asteroid in self.game_state.asteroids:
             asteroid.update(time_delta)
+            asteroid_collision_polygon = asteroid.get_collision_polygon()
+            if collides(player_collision_polygon, asteroid_collision_polygon):
+                self.scene_controller.change_active_scene(SceneEnum.MainMenu)
 
         if self.score_tick > 100:
             self.score_tick = 0
@@ -63,8 +71,9 @@ class GameScene(Scene):
         self.game_state.player.render(screen)
 
         # Clear any asteroids off the screen
-        self.game_state.asteroids[:] = [asteroid for asteroid in self.game_state.asteroids if
-                                        asteroid.pos_y < screen.get_height() + 100]
+        self.game_state.asteroids[:] = [
+            asteroid for asteroid in self.game_state.asteroids if asteroid.pos_y < screen.get_height() + 100
+        ]
 
         # Now render any asteroids left
         for asteroid in self.game_state.asteroids:

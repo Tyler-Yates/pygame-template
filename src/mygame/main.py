@@ -3,10 +3,9 @@ import logging
 import pygame
 
 from controllers.controller import Controller
-from frameprocessors.main_menu_scene import MainMenuScene
 from frameprocessors.performance_overlay import PerformanceOverlay
+from src.mygame.controllers.scene_controller import SceneController
 from state.game_state import GameState
-from state.scene_state import SceneState
 
 logging.basicConfig(level=logging.INFO)
 
@@ -18,15 +17,11 @@ GAME_NAME = "Pygame Template"
 
 def main():
     game_state = GameState()
-    scene_state = SceneState()
+    scene_controller = SceneController(game_state)
 
-    main_menu_scene = MainMenuScene(game_state=game_state, scene_state=scene_state)
+    overlays = [PerformanceOverlay(game_state, scene_controller)]
 
-    scene_state.change_scene(main_menu_scene)
-
-    overlays = [PerformanceOverlay(game_state, scene_state)]
-
-    director = Controller(GAME_NAME, game_state, scene_state, GAME_FPS, GAME_WIDTH_PX, GAME_HEIGHT_PX, overlays)
+    director = Controller(GAME_NAME, game_state, scene_controller, GAME_FPS, GAME_WIDTH_PX, GAME_HEIGHT_PX, overlays)
     director.loop()
 
 

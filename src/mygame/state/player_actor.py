@@ -4,7 +4,7 @@ import pygame
 from pygame import Surface
 from pygame.event import Event
 
-from src.mygame.interfaces.Actor import Actor
+from src.mygame.interfaces.actor import Actor
 
 PLAYER_SIZE = 20
 PLAYER_OFFSET_FROM_BOTTOM = 10
@@ -17,9 +17,16 @@ class Player(Actor):
         super().__init__()
 
         self.pos_x = 0.0
+        self.pos_y = 0.0
 
         self.moving_left = False
         self.moving_right = False
+
+    def get_collision_polygon(self) -> List[List[float]]:
+        point1 = [self.pos_x - (PLAYER_SIZE / 2), self.pos_y + PLAYER_SIZE]
+        point2 = [self.pos_x, self.pos_y]
+        point3 = [self.pos_x + (PLAYER_SIZE / 2), self.pos_y + PLAYER_SIZE]
+        return [point1, point2, point3]
 
     def process_input(self, events: List[Event]):
         for event in events:
@@ -42,8 +49,4 @@ class Player(Actor):
             self.pos_x += PLAYER_SPEED * time_delta
 
     def render(self, screen: Surface):
-        pos_y = screen.get_height() - PLAYER_OFFSET_FROM_BOTTOM - PLAYER_SIZE
-        point1 = [self.pos_x - (PLAYER_SIZE / 2), pos_y + PLAYER_SIZE]
-        point2 = [self.pos_x, pos_y]
-        point3 = [self.pos_x + (PLAYER_SIZE / 2), pos_y + PLAYER_SIZE]
-        pygame.draw.polygon(screen, "white", [point1, point2, point3], 0)
+        pygame.draw.polygon(screen, "white", self.get_collision_polygon(), 0)

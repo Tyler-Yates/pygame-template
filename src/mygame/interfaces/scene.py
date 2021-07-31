@@ -1,8 +1,11 @@
 from abc import ABC
+from typing import TYPE_CHECKING
 
 from src.mygame.interfaces.frame_processor import FrameProcessor
 from src.mygame.state.game_state import GameState
-from src.mygame.state.scene_state import SceneState
+
+if TYPE_CHECKING:
+    from src.mygame.controllers.scene_controller import SceneController
 
 
 class Scene(FrameProcessor, ABC):
@@ -12,5 +15,5 @@ class Scene(FrameProcessor, ABC):
     This is an abstract class and should be implemented by other classes.
     """
 
-    def __init__(self, game_state: GameState, scene_state: SceneState):
-        super().__init__(game_state, scene_state)
+    def __init__(self, game_state: GameState, scene_controller: "SceneController"):
+        super().__init__(game_state, scene_controller)

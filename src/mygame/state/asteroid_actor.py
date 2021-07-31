@@ -3,7 +3,7 @@ from typing import List
 import pygame
 from pygame.surface import Surface
 
-from src.mygame.interfaces.Actor import Actor
+from src.mygame.interfaces.actor import Actor
 
 
 class Asteroid(Actor):

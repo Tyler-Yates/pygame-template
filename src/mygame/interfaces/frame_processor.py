@@ -1,9 +1,14 @@
 from abc import ABC
 
+# Avoid cyclic imports since we only want these for type checking
+from typing import TYPE_CHECKING
+
 from pygame.surface import Surface
 
 from src.mygame.state.game_state import GameState
-from src.mygame.state.scene_state import SceneState
+
+if TYPE_CHECKING:
+    from src.mygame.controllers.scene_controller import SceneController
 
 
 class FrameProcessor(ABC):
@@ -13,9 +18,9 @@ class FrameProcessor(ABC):
     This is an abstract class and should be implemented by other classes.
     """
 
-    def __init__(self, game_state: GameState, scene_state: SceneState):
+    def __init__(self, game_state: GameState, scene_controller: "SceneController"):
         self.game_state = game_state
-        self.scene_state = scene_state
+        self.scene_controller = scene_controller
 
     def process_input(self, events):
         """
