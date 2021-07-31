@@ -1,8 +1,8 @@
 from abc import ABC
 
-from interfaces.frame_processor import FrameProcessor
-from state.game_state import GameState
-from state.scene_state import SceneState
+from src.mygame.interfaces.frame_processor import FrameProcessor
+from src.mygame.state.game_state import GameState
+from src.mygame.state.scene_state import SceneState
 
 
 class Overlay(FrameProcessor, ABC):

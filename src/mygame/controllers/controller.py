@@ -3,9 +3,9 @@ from typing import List
 
 import pygame
 
-from interfaces.overlay import Overlay
-from state.game_state import GameState
-from state.scene_state import SceneState
+from src.mygame.interfaces.overlay import Overlay
+from src.mygame.state.game_state import GameState
+from src.mygame.state.scene_state import SceneState
 
 
 class Controller:

@@ -4,11 +4,11 @@ import pygame
 from pygame import Surface
 from pygame.event import Event
 
-from interfaces.scene import Scene
-from frameprocessors.game_scene import GameScene
-from state.game_state import GameState
-from state.scene_state import SceneState
-from util.fonts import BASIC_FONT
+from src.mygame.interfaces.scene import Scene
+from src.mygame.frameprocessors.game_scene import GameScene
+from src.mygame.state.game_state import GameState
+from src.mygame.state.scene_state import SceneState
+from src.mygame.util.fonts import BASIC_FONT
 
 
 MAIN_MENU_BACKGROUND_COLOR = (200, 200, 200)

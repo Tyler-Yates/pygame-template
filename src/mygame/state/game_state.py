@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from state.player_state import PlayerState
+from src.mygame.state.player_state import PlayerState
 
 
 @dataclass

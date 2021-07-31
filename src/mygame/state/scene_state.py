@@ -2,7 +2,7 @@
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from interfaces.scene import Scene
+    from src.mygame.interfaces.scene import Scene
 
 
 class SceneState:

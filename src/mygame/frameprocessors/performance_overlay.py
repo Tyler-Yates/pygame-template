@@ -4,10 +4,10 @@ import pygame
 from pygame.event import Event
 from pygame.surface import Surface
 
-from interfaces.overlay import Overlay
-from state.game_state import GameState
-from state.scene_state import SceneState
-from util.fonts import BASIC_FONT
+from src.mygame.interfaces.overlay import Overlay
+from src.mygame.state.game_state import GameState
+from src.mygame.state.scene_state import SceneState
+from src.mygame.util.fonts import BASIC_FONT
 
 
 TOGGLE_HOTKEY = pygame.K_F12
