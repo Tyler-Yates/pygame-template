@@ -1,6 +1,7 @@
 import pygame
 
-from mygame.scenes.scene import Scene
+from mygame.state.game_state import GameState
+from mygame.state.scene_state import SceneState
 
 
 class Director:
@@ -11,12 +12,13 @@ class Director:
 
     This object must be used with Scene objects that are defined later."""
 
-    def __init__(self, first_scene: Scene, fps: int, width_px: int, height_px: int):
+    def __init__(self, game_state: GameState, scene_state: SceneState, fps: int, width_px: int, height_px: int):
         self.fps = fps
         self.width_px = width_px
         self.height_px = height_px
+        self.game_state = game_state
+        self.scene_state = scene_state
 
-        self.active_scene = first_scene
         self.quit_flag = False
         self.clock = pygame.time.Clock()
 
@@ -26,6 +28,7 @@ class Director:
     def loop(self):
         """Main game loop."""
 
+        scene = self.scene_state.active_scene
         while not self.quit_flag:
             self.clock.tick(self.fps)
 
@@ -38,15 +41,14 @@ class Director:
                     events.append(event)
 
             # Scene executions
-            self.active_scene.process_input(events)
-            self.active_scene.update()
-            self.active_scene.render(self.screen)
+            scene.process_input(events)
+            scene.update()
+            scene.render(self.screen)
+
+            # We do not want to change scenes mid-frame so wait until the end of the frame to change scenes
+            scene = self.scene_state.get_active_scene()
 
             pygame.display.flip()
-
-    def change_scene(self, scene: Scene):
-        """Changes the current scene."""
-        self.active_scene = scene
 
     def quit(self):
         self.quit_flag = True
