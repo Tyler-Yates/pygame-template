@@ -2,6 +2,7 @@ from random import randrange
 from typing import List
 
 import pygame
+import pygame.gfxdraw
 from pygame.surface import Surface
 
 from src.mygame.constants.engine_constants import GAME_WIDTH_PX
@@ -46,4 +47,6 @@ class Asteroid(Actor):
         self.pos_y += self.speed * time_delta
 
     def render(self, screen: Surface):
-        pygame.draw.polygon(screen, "white", self.get_collision_polygon(), 0)
+        pygame.gfxdraw.aapolygon(screen, self.get_collision_polygon(), (255, 255, 255))
+        pygame.gfxdraw.filled_polygon(screen, self.get_collision_polygon(), (255, 255, 255))
+        pygame.gfxdraw.aapolygon(screen, self.get_collision_polygon(), (200, 200, 200))
