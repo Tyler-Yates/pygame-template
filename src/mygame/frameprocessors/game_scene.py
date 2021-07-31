@@ -17,6 +17,9 @@ if TYPE_CHECKING:
 
 BACKGROUND_COLOR = (50, 50, 50)
 
+MINIMUM_ASTEROID_TICK = 100
+BASE_MAXIMUM_ASTEROID_TICK = 4000
+
 SCORE_TEXT_PREFIX = "Score: "
 SCORE_TEXT_SIZE = 20
 
@@ -54,18 +57,30 @@ class GameScene(Scene):
             self.score_tick = 0
             self.game_state.score += 1
 
-        if self.asteroid_tick > self.next_asteroid_tick:
+        if (self.asteroid_tick > self.next_asteroid_tick) and (len(self.game_state.asteroids) < 7):
             self.asteroid_tick = 0
-            self.next_asteroid_tick = randrange(100, 4000)
-            self._create_asteroid()
+            self._create_asteroid_and_set_next_ticket()
 
         tick = int(time_delta * 1000)
         self.asteroid_tick += tick
         self.score_tick += tick
 
-    def _create_asteroid(self):
-        self.log.info(f"Creating new asteroid. Existing asteroids: {len(self.game_state.asteroids)}")
+    def _create_asteroid_and_set_next_ticket(self):
         self.game_state.asteroids.append(Asteroid())
+
+        if self.game_state.score < 300:
+            self.next_asteroid_tick = randrange(MINIMUM_ASTEROID_TICK, BASE_MAXIMUM_ASTEROID_TICK)
+        elif self.game_state.score < 600:
+            self.next_asteroid_tick = randrange(MINIMUM_ASTEROID_TICK, int(BASE_MAXIMUM_ASTEROID_TICK / 2))
+        elif self.game_state.score < 1200:
+            self.next_asteroid_tick = randrange(MINIMUM_ASTEROID_TICK, int(BASE_MAXIMUM_ASTEROID_TICK / 4))
+        else:
+            self.next_asteroid_tick = randrange(MINIMUM_ASTEROID_TICK, int(BASE_MAXIMUM_ASTEROID_TICK / 8))
+
+        self.log.info(
+            f"Creating new asteroid. Next tick: {self.next_asteroid_tick}. "
+            f"Existing asteroids: {len(self.game_state.asteroids)}"
+        )
 
     def render(self, screen: Surface):
         screen.fill(BACKGROUND_COLOR)
