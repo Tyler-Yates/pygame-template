@@ -1,5 +1,7 @@
 # pygame-template
 
+![tox workflow](https://github.com/Tyler-Yates/pygame-template/actions/workflows/tox-workflow.yml/badge.svg)
+
 Template for pygame games
 
 ## Development
