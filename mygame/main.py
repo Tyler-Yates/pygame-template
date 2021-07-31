@@ -3,7 +3,8 @@ import logging
 import pygame
 
 from mygame.controllers.director import Director
-from mygame.scenes.main_menu_scene import MainMenuScene
+from mygame.frameprocessors.main_menu_scene import MainMenuScene
+from mygame.frameprocessors.performance_overlay import PerformanceOverlay
 from mygame.state.game_state import GameState
 from mygame.state.scene_state import SceneState
 
@@ -25,7 +26,9 @@ def main():
 
     scene_state.change_scene(main_menu_scene)
 
-    director = Director(game_state, scene_state, GAME_FPS, GAME_WIDTH_PX, GAME_HEIGHT_PX)
+    overlays = [PerformanceOverlay(game_state, scene_state)]
+
+    director = Director(game_state, scene_state, GAME_FPS, GAME_WIDTH_PX, GAME_HEIGHT_PX, overlays)
     director.loop()
 
 

@@ -5,7 +5,7 @@ from pygame import Surface
 from pygame.event import Event
 
 from mygame.interfaces.scene import Scene
-from mygame.scenes.game_scene import GameScene
+from mygame.frameprocessors.game_scene import GameScene
 from mygame.state.game_state import GameState
 from mygame.state.scene_state import SceneState
 from mygame.util.fonts import BASIC_FONT

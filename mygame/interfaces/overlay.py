@@ -5,13 +5,10 @@ from mygame.state.game_state import GameState
 from mygame.state.scene_state import SceneState
 
 
-class Scene(FrameProcessor, ABC):
+class Overlay(FrameProcessor, ABC):
     """
-    Only a single scene should be active at a given time.
-
-    This is an abstract class and should be implemented by other classes.
+    Represents a single overlay. There can be multiple overlays active at one time.
     """
 
     def __init__(self, game_state: GameState, scene_state: SceneState):
         super().__init__(game_state, scene_state)
-

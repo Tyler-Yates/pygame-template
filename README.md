@@ -10,6 +10,7 @@ this list.
 
 ```
 controllers
+frameprocessors
 scenes
 state
 interfaces

@@ -1,10 +1,11 @@
 import logging
+from typing import List
 
 import pygame
 
+from mygame.interfaces.overlay import Overlay
 from mygame.state.game_state import GameState
 from mygame.state.scene_state import SceneState
-from mygame.util.fonts import BASIC_FONT
 
 
 class Director:
@@ -15,7 +16,8 @@ class Director:
 
     This object must be used with Scene objects that are defined later."""
 
-    def __init__(self, game_state: GameState, scene_state: SceneState, fps: int, width_px: int, height_px: int):
+    def __init__(self, game_state: GameState, scene_state: SceneState, fps: int, width_px: int, height_px: int,
+                 overlays: List[Overlay]):
         self.log = logging.getLogger(self.__class__.__name__)
 
         self.fps = fps
@@ -23,6 +25,7 @@ class Director:
         self.height_px = height_px
         self.game_state = game_state
         self.scene_state = scene_state
+        self.overlays = overlays
 
         self.log.info(f"Starting game with resolution {self.width_px}x{self.height_px} at {self.fps} FPS")
 
@@ -46,16 +49,23 @@ class Director:
                 else:
                     events.append(event)
 
-            # Scene executions
+            # Input processing
             scene.process_input(events)
+            for overlay in self.overlays:
+                overlay.process_input(events)
+
+            # Updating
             scene.update(time_delta)
+            for overlay in self.overlays:
+                overlay.update(time_delta)
+
+            # Rendering
             scene.render(self.screen)
+            for overlay in self.overlays:
+                overlay.render(self.screen)
 
             # We do not want to change scenes mid-frame so wait until the end of the frame to change scenes
             scene = self.scene_state.get_active_scene()
-
-            # Draw performance info
-            BASIC_FONT.render_to(self.screen, (self.width_px - 20, 5), f"{millis_since_last_frame}", 'red', size=14)
 
             pygame.display.flip()
 
