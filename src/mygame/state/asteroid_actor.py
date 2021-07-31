@@ -1,19 +1,36 @@
+from random import randrange
 from typing import List
 
 import pygame
 from pygame.surface import Surface
 
+from src.mygame.constants.engine_constants import GAME_WIDTH_PX
 from src.mygame.interfaces.actor import Actor
+
+BASE_SPEED = 200
+MINIMUM_SIZE = 20
+MAXIMUM_SIZE = 150
 
 
 class Asteroid(Actor):
-    def __init__(self, pos_x, pos_y):
+    def __init__(self, pos_x: float = None, pos_y: float = None, size: float = None):
         super().__init__()
-        self.pos_x = pos_x
-        self.pos_y = pos_y
+        if pos_x:
+            self.pos_x = pos_x
+        else:
+            self.pos_x = randrange(0, GAME_WIDTH_PX)
 
-        self.speed = 240
-        self.size = 20
+        if size is None:
+            self.size = randrange(MINIMUM_SIZE, MAXIMUM_SIZE)
+        else:
+            self.size = size
+
+        if pos_y:
+            self.pos_y = pos_y
+        else:
+            self.pos_y = -self.size * 2
+
+        self.speed = float(MAXIMUM_SIZE - MINIMUM_SIZE) / self.size * BASE_SPEED
 
     def get_collision_polygon(self) -> List[List[float]]:
         point1 = [self.pos_x - self.size, self.pos_y - self.size]

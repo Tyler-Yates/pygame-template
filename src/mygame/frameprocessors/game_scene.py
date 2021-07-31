@@ -1,9 +1,11 @@
 import logging
+from random import randrange
 from typing import List, TYPE_CHECKING
 
 from pygame import Surface
 from pygame.event import Event
 
+from src.mygame.constants.engine_constants import GAME_WIDTH_PX
 from src.mygame.constants.scene_enum import SceneEnum
 from src.mygame.interfaces.scene import Scene
 from src.mygame.state.asteroid_actor import Asteroid
@@ -31,6 +33,8 @@ class GameScene(Scene):
         self.log = logging.getLogger(self.__class__.__name__)
 
         self.asteroid_tick = 0
+        self.next_asteroid_tick = 5000
+
         self.score_tick = 0
 
     def process_input(self, events: List[Event]):
@@ -51,14 +55,18 @@ class GameScene(Scene):
             self.score_tick = 0
             self.game_state.score += 1
 
-        if self.asteroid_tick > 5000:
+        if self.asteroid_tick > self.next_asteroid_tick:
             self.asteroid_tick = 0
-            self.log.info(f"Creating new asteroid. Existing asteroids: {len(self.game_state.asteroids)}")
-            self.game_state.asteroids.append(Asteroid(100, -100))
+            self.next_asteroid_tick = randrange(100, 4000)
+            self._create_asteroid()
 
         tick = int(time_delta * 1000)
         self.asteroid_tick += tick
         self.score_tick += tick
+
+    def _create_asteroid(self):
+        self.log.info(f"Creating new asteroid. Existing asteroids: {len(self.game_state.asteroids)}")
+        self.game_state.asteroids.append(Asteroid())
 
     def render(self, screen: Surface):
         screen.fill(BACKGROUND_COLOR)
@@ -70,9 +78,10 @@ class GameScene(Scene):
         # Player
         self.game_state.player.render(screen)
 
-        # Clear any asteroids off the screen
+        # Only keep asteroids that have not gone too far below the screen.
         self.game_state.asteroids[:] = [
-            asteroid for asteroid in self.game_state.asteroids if asteroid.pos_y < screen.get_height() + 100
+            asteroid for asteroid in self.game_state.asteroids if
+            asteroid.pos_y < screen.get_height() + asteroid.size * 2
         ]
 
         # Now render any asteroids left

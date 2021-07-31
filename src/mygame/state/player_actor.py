@@ -10,7 +10,7 @@ from src.mygame.interfaces.actor import Actor
 PLAYER_SIZE = 20
 PLAYER_OFFSET_FROM_BOTTOM = 10
 
-PLAYER_SPEED = 120
+PLAYER_SPEED = 240
 
 
 class Player(Actor):
