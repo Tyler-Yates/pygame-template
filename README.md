@@ -11,13 +11,13 @@ this list.
 ```
 controllers
 frameprocessors
-scenes
 state
 interfaces
 util
+constants
 ```
 
-Thus, the `util` module should not import any other modules.
+Thus, the `constants` module should not import any other modules.
 
 ## Game State
 
