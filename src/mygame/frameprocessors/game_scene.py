@@ -27,7 +27,8 @@ class GameScene(Scene):
 
         self.log = logging.getLogger(self.__class__.__name__)
 
-        self.tick = 0
+        self.asteroid_tick = 0
+        self.score_tick = 0
 
     def process_input(self, events: List[Event]):
         self.game_state.player.process_input(events)
@@ -38,12 +39,18 @@ class GameScene(Scene):
         for asteroid in self.game_state.asteroids:
             asteroid.update(time_delta)
 
-        if self.tick > 5000:
-            self.tick = 0
+        if self.score_tick > 100:
+            self.score_tick = 0
+            self.game_state.score += 1
+
+        if self.asteroid_tick > 5000:
+            self.asteroid_tick = 0
             self.log.info(f"Creating new asteroid. Existing asteroids: {len(self.game_state.asteroids)}")
             self.game_state.asteroids.append(Asteroid(100, -100))
 
-        self.tick += int(time_delta * 1000)
+        tick = int(time_delta * 1000)
+        self.asteroid_tick += tick
+        self.score_tick += tick
 
     def render(self, screen: Surface):
         screen.fill(BACKGROUND_COLOR)
@@ -55,9 +62,10 @@ class GameScene(Scene):
         # Player
         self.game_state.player.render(screen)
 
-        # Asteroids
+        # Clear any asteroids off the screen
         self.game_state.asteroids[:] = [asteroid for asteroid in self.game_state.asteroids if
                                         asteroid.pos_y < screen.get_height() + 100]
 
+        # Now render any asteroids left
         for asteroid in self.game_state.asteroids:
             asteroid.render(screen)
