@@ -2,8 +2,8 @@ from abc import ABC
 
 from pygame.surface import Surface
 
-from mygame.state.game_state import GameState
-from mygame.state.scene_state import SceneState
+from state.game_state import GameState
+from state.scene_state import SceneState
 
 
 class FrameProcessor(ABC):

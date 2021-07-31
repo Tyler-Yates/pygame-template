@@ -4,10 +4,10 @@ import pygame
 from pygame.event import Event
 from pygame.surface import Surface
 
-from mygame.interfaces.overlay import Overlay
-from mygame.state.game_state import GameState
-from mygame.state.scene_state import SceneState
-from mygame.util.fonts import BASIC_FONT
+from interfaces.overlay import Overlay
+from state.game_state import GameState
+from state.scene_state import SceneState
+from util.fonts import BASIC_FONT
 
 
 TOGGLE_HOTKEY = pygame.K_F12
@@ -37,4 +37,4 @@ class PerformanceOverlay(Overlay):
 
     def render(self, screen: Surface):
         if self.show_fps:
-            BASIC_FONT.render_to(screen, (screen.get_width() - 20, 5), f"{self.time_delta}", 'red', size=14)
+            BASIC_FONT.render_to(screen, (screen.get_width() - 20, 5), f"{self.time_delta}", "red", size=14)

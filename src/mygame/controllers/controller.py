@@ -3,9 +3,9 @@ from typing import List
 
 import pygame
 
-from mygame.interfaces.overlay import Overlay
-from mygame.state.game_state import GameState
-from mygame.state.scene_state import SceneState
+from interfaces.overlay import Overlay
+from state.game_state import GameState
+from state.scene_state import SceneState
 
 
 class Controller:
@@ -13,8 +13,16 @@ class Controller:
     The main controller that orchestrates all the game pieces.
     """
 
-    def __init__(self, game_name: str, game_state: GameState, scene_state: SceneState, fps: int, width_px: int,
-                 height_px: int, overlays: List[Overlay]):
+    def __init__(
+        self,
+        game_name: str,
+        game_state: GameState,
+        scene_state: SceneState,
+        fps: int,
+        width_px: int,
+        height_px: int,
+        overlays: List[Overlay],
+    ):
         self.log = logging.getLogger(self.__class__.__name__)
         self.game_name = game_name
         self.fps = fps

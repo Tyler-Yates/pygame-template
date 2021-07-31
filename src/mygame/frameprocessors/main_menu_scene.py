@@ -4,11 +4,11 @@ import pygame
 from pygame import Surface
 from pygame.event import Event
 
-from mygame.interfaces.scene import Scene
-from mygame.frameprocessors.game_scene import GameScene
-from mygame.state.game_state import GameState
-from mygame.state.scene_state import SceneState
-from mygame.util.fonts import BASIC_FONT
+from interfaces.scene import Scene
+from frameprocessors.game_scene import GameScene
+from state.game_state import GameState
+from state.scene_state import SceneState
+from util.fonts import BASIC_FONT
 
 
 MAIN_MENU_BACKGROUND_COLOR = (200, 200, 200)
@@ -39,4 +39,4 @@ class MainMenuScene(Scene):
 
         text_rect = BASIC_FONT.get_rect(MAIN_MENU_TEXT, size=MAIN_MENU_TEXT_SIZE)
         text_rect.center = screen.get_rect().center
-        BASIC_FONT.render_to(screen, text_rect, MAIN_MENU_TEXT, 'black', size=MAIN_MENU_TEXT_SIZE)
+        BASIC_FONT.render_to(screen, text_rect, MAIN_MENU_TEXT, "black", size=MAIN_MENU_TEXT_SIZE)

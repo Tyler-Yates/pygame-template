@@ -41,4 +41,4 @@ class PlayerState:
         point1 = [self.pos_x - (PLAYER_SIZE / 2), pos_y + PLAYER_SIZE]
         point2 = [self.pos_x, pos_y]
         point3 = [self.pos_x + (PLAYER_SIZE / 2), pos_y + PLAYER_SIZE]
-        pygame.draw.polygon(screen, 'white', [point1, point2, point3], 0)
+        pygame.draw.polygon(screen, "white", [point1, point2, point3], 0)

@@ -2,11 +2,11 @@ import logging
 
 import pygame
 
-from mygame.controllers.controller import Controller
-from mygame.frameprocessors.main_menu_scene import MainMenuScene
-from mygame.frameprocessors.performance_overlay import PerformanceOverlay
-from mygame.state.game_state import GameState
-from mygame.state.scene_state import SceneState
+from controllers.controller import Controller
+from frameprocessors.main_menu_scene import MainMenuScene
+from frameprocessors.performance_overlay import PerformanceOverlay
+from state.game_state import GameState
+from state.scene_state import SceneState
 
 logging.basicConfig(level=logging.INFO)
 
@@ -30,6 +30,6 @@ def main():
     director.loop()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pygame.init()
     main()
