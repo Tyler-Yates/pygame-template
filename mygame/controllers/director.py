@@ -30,7 +30,7 @@ class Director:
 
         scene = self.scene_state.active_scene
         while not self.quit_flag:
-            self.clock.tick(self.fps)
+            time_delta = self.clock.tick(self.fps)
 
             # Exit events
             events = []
@@ -42,7 +42,7 @@ class Director:
 
             # Scene executions
             scene.process_input(events)
-            scene.update()
+            scene.update(time_delta)
             scene.render(self.screen)
 
             # We do not want to change scenes mid-frame so wait until the end of the frame to change scenes

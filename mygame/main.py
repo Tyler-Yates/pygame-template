@@ -13,6 +13,10 @@ GAME_HEIGHT_PX = 720
 def main():
     game_state = GameState()
     scene_state = SceneState()
+
+    # Start the player at the center of the screen
+    game_state.player.pos_x = GAME_WIDTH_PX / 2
+
     main_menu_scene = MainMenuScene(game_state=game_state, scene_state=scene_state)
 
     scene_state.change_scene(main_menu_scene)

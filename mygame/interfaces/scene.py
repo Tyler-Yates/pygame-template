@@ -1,3 +1,4 @@
+# Avoid cyclic imports since we only want these for type checking
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from mygame.state.game_state import GameState
@@ -18,7 +19,7 @@ class Scene:
     def process_input(self, events):
         raise NotImplementedError("Subclass must implement.")
 
-    def update(self):
+    def update(self, time_delta: int):
         raise NotImplementedError("Subclass must implement.")
 
     def render(self, screen):
