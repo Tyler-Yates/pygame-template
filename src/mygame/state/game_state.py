@@ -1,7 +1,7 @@
 from typing import List
 
 from src.mygame.state.asteroid_actor import Asteroid
-from src.mygame.state.hiscore_state import HiscoreState
+from src.mygame.state.high_score_state import HighScoreState
 from src.mygame.state.player_actor import Player
 
 
@@ -16,7 +16,7 @@ class GameState:
         self.player = Player()
         self.asteroids: List[Asteroid] = []
 
-        self.hiscores = HiscoreState()
+        self.high_scores = HighScoreState()
 
     def reset(self):
         """
@@ -27,4 +27,4 @@ class GameState:
         self.player = Player()
         self.asteroids: List[Asteroid] = []
 
-        # We do not need to reset the hiscore as that is persistent
+        # We do not need to reset the high scores as that is persistent

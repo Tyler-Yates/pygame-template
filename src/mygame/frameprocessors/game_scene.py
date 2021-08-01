@@ -77,7 +77,7 @@ class GameScene(Scene):
         else:
             self.next_asteroid_tick = randrange(MINIMUM_ASTEROID_TICK, int(BASE_MAXIMUM_ASTEROID_TICK / 8))
 
-        self.log.info(
+        self.log.debug(
             f"Creating new asteroid. Next tick: {self.next_asteroid_tick}. "
             f"Existing asteroids: {len(self.game_state.asteroids)}"
         )

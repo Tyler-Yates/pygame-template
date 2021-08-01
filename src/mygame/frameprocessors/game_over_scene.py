@@ -28,9 +28,9 @@ class GameOverScene(Scene):
     def __init__(self, game_state: GameState, scene_controller: "SceneController"):
         super().__init__(game_state, scene_controller)
 
-        # Add score to the hiscore table and save to disk
-        self.new_hiscore = self.game_state.hiscores.add_hiscore(self.game_state.score)
-        self.game_state.hiscores.save_hiscores()
+        # Add score to the high score table and save to disk
+        self.is_new_high_score = self.game_state.high_scores.add_high_score(self.game_state.score)
+        self.game_state.high_scores.save_high_scores()
 
     def process_input(self, events: List[Event]):
         for event in events:
@@ -69,11 +69,11 @@ class GameOverScene(Scene):
         BASIC_FONT.render_to(screen, score_text_rect, score_text, "white", size=SCORE_TEXT_SIZE)
 
         # New High Score text
-        if self.new_hiscore:
-            new_hiscore_text = "New High Score!"
-            new_hiscore_text_rect = BASIC_FONT.get_rect(new_hiscore_text, size=SCORE_TEXT_SIZE)
-            new_hiscore_text_rect.center = (score_text_rect.center[0], score_text_rect.center[1] + 50)
-            BASIC_FONT.render_to(screen, new_hiscore_text_rect, new_hiscore_text, "yellow", size=SCORE_TEXT_SIZE)
+        if self.is_new_high_score:
+            new_high_score_text = "New High Score!"
+            new_high_score_text_rect = BASIC_FONT.get_rect(new_high_score_text, size=SCORE_TEXT_SIZE)
+            new_high_score_text_rect.center = (score_text_rect.center[0], score_text_rect.center[1] + 50)
+            BASIC_FONT.render_to(screen, new_high_score_text_rect, new_high_score_text, "yellow", size=SCORE_TEXT_SIZE)
 
         # High Score Title
         high_score_title_text = "High Scores"
@@ -84,7 +84,7 @@ class GameOverScene(Scene):
         # High Scores
         offset = 0
         vertical_spacing = BASIC_FONT.get_rect("9", size=SCORE_TEXT_SIZE).height + 5
-        for score in self.game_state.hiscores.hiscores:
+        for score in self.game_state.high_scores.high_scores:
             high_score_text = str(score)
             high_score_text_rect = BASIC_FONT.get_rect(high_score_text, size=SCORE_TEXT_SIZE)
             high_score_text_rect.midright = (
