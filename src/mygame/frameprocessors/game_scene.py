@@ -36,6 +36,7 @@ class GameScene(Scene):
 
         self.asteroid_tick = 0
         self.next_asteroid_tick = 5000
+        self.maximum_asteroids_on_screen = 5
 
         self.score_tick = 0
 
@@ -43,31 +44,39 @@ class GameScene(Scene):
         self.game_state.player.process_input(events)
 
     def update(self, time_delta: float):
+        # Move the player
         self.game_state.player.update(time_delta)
 
+        # Check for any collisions and end the game if there are any
         player_collision_polygon = self.game_state.player.get_collision_polygon()
-
         for asteroid in self.game_state.asteroids:
             asteroid.update(time_delta)
             asteroid_collision_polygon = asteroid.get_collision_polygon()
             if collides(player_collision_polygon, asteroid_collision_polygon):
                 self.scene_controller.change_active_scene(SceneEnum.GameOver)
 
+        # Increase score every tenth of a second
         if self.score_tick > 100:
             self.score_tick = 0
             self.game_state.score += 1
 
-        if (self.asteroid_tick > self.next_asteroid_tick) and (len(self.game_state.asteroids) < 7):
+        # Generate an asteroid if it is time to do so and there are not too many on screen
+        if (self.asteroid_tick > self.next_asteroid_tick) and (
+            len(self.game_state.asteroids) < self.maximum_asteroids_on_screen
+        ):
             self.asteroid_tick = 0
             self._create_asteroid_and_set_next_ticket()
 
+        # Update ticks for time-based events
         tick = int(time_delta * 1000)
         self.asteroid_tick += tick
         self.score_tick += tick
 
     def _create_asteroid_and_set_next_ticket(self):
+        # Generate a new asteroid
         self.game_state.asteroids.append(Asteroid())
 
+        # Calculate when the next asteroid should be generated
         if self.game_state.score < 300:
             self.next_asteroid_tick = randrange(MINIMUM_ASTEROID_TICK, BASE_MAXIMUM_ASTEROID_TICK)
         elif self.game_state.score < 600:
@@ -76,6 +85,16 @@ class GameScene(Scene):
             self.next_asteroid_tick = randrange(MINIMUM_ASTEROID_TICK, int(BASE_MAXIMUM_ASTEROID_TICK / 4))
         else:
             self.next_asteroid_tick = randrange(MINIMUM_ASTEROID_TICK, int(BASE_MAXIMUM_ASTEROID_TICK / 8))
+
+        # Adjust how many asteroids can be on the screen
+        if self.game_state.score < 600:
+            self.maximum_asteroids_on_screen = 5
+        elif self.game_state.score < 1200:
+            self.maximum_asteroids_on_screen = 7
+        elif self.game_state.score < 1200:
+            self.maximum_asteroids_on_screen = 8
+        else:
+            self.maximum_asteroids_on_screen = 9
 
         self.log.debug(
             f"Creating new asteroid. Next tick: {self.next_asteroid_tick}. "
