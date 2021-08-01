@@ -4,7 +4,7 @@ import pygame
 from pygame import Surface
 from pygame.event import Event
 
-from src.mygame.constants.engine_constants import GAME_WIDTH_PX, GAME_HEIGHT_PX
+from src.mygame.constants.game_constants import GAME_WIDTH_PX, GAME_HEIGHT_PX
 from src.mygame.interfaces.actor import Actor
 
 PLAYER_SIZE = 20

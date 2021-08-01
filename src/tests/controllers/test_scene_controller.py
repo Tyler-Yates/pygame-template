@@ -1,5 +1,3 @@
-from unittest.mock import Mock
-
 import pytest as pytest
 
 from src.mygame.constants.scene_enum import SceneEnum
@@ -11,7 +9,7 @@ from src.mygame.state.game_state import GameState
 class TestSceneController:
     @pytest.fixture(scope="function")
     def scene_controller(self):
-        game_state = Mock(GameState)
+        game_state: GameState = GameState()
         scene_controller = SceneController(game_state)
         return scene_controller
 

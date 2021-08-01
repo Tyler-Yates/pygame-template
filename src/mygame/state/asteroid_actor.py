@@ -5,7 +5,7 @@ import pygame
 import pygame.gfxdraw
 from pygame.surface import Surface
 
-from src.mygame.constants.engine_constants import GAME_WIDTH_PX
+from src.mygame.constants.game_constants import GAME_WIDTH_PX
 from src.mygame.interfaces.actor import Actor
 
 BASE_SPEED = 200
