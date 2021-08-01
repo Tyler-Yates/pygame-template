@@ -38,7 +38,8 @@ class GameScene(Scene):
         self.next_asteroid_tick = 5000
         self.maximum_asteroids_on_screen = 5
 
-        self.score_tick = 0
+        # We keep track of score as a float since there may be more than one frame per tenth of a second
+        self.score_float = float(game_state.score)
 
     def process_input(self, events: List[Event]):
         self.game_state.player.process_input(events)
@@ -55,10 +56,9 @@ class GameScene(Scene):
             if collides(player_collision_polygon, asteroid_collision_polygon):
                 self.scene_controller.change_active_scene(SceneEnum.GameOver)
 
-        # Increase score every tenth of a second
-        if self.score_tick > 100:
-            self.score_tick = 0
-            self.game_state.score += 1
+        # Increase score by one every tenth of a second
+        self.score_float += time_delta * 10
+        self.game_state.score = round(self.score_float)
 
         # Generate an asteroid if it is time to do so and there are not too many on screen
         if (self.asteroid_tick > self.next_asteroid_tick) and (
@@ -70,7 +70,6 @@ class GameScene(Scene):
         # Update ticks for time-based events
         tick = int(time_delta * 1000)
         self.asteroid_tick += tick
-        self.score_tick += tick
 
     def _create_asteroid_and_set_next_ticket(self):
         # Generate a new asteroid
