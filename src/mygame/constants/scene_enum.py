@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, auto
 
 
 class SceneEnum(Enum):
@@ -7,6 +7,6 @@ class SceneEnum(Enum):
     We need this because scenes may want to transition back and forth leading to cyclical imports.
     """
 
-    MainMenu = 0
-    Game = 1
-    GameOver = 2
+    MainMenu = auto()
+    Game = auto()
+    GameOver = auto()
