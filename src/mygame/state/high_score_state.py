@@ -10,15 +10,16 @@ MAXIMUM_NUMBER_OF_HIGH_SCORES = 10
 
 HIGH_SCORE_KEY = "high_scores"
 
-SAVE_FILE_NAME = "save.json"
+DEFAULT_SAVE_FILE_NAME = "save.json"
 
 
 class HighScoreState:
-    def __init__(self):
+    def __init__(self, save_file_name: str = None):
         self.log = logging.getLogger(self.__class__.__name__)
         self.high_scores: List[int] = []
 
-        self.save_file_path = os.path.join(get_save_file_directory(), SAVE_FILE_NAME)
+        self.save_file_name = DEFAULT_SAVE_FILE_NAME if save_file_name is None else save_file_name
+        self.save_file_path = os.path.join(get_save_file_directory(), self.save_file_name)
 
         # Attempt to load the save file from disk
         self.high_scores = self._load_save_file()
@@ -40,6 +41,15 @@ class HighScoreState:
         except Exception as e:
             self.log.error("Could not load high score file.", e)
             return []
+
+    def get_high_scores(self) -> List[int]:
+        """
+        Returns the high scores in order from largest to smallest.
+
+        Returns:
+            The high scores in sorted order
+        """
+        return self.high_scores
 
     def add_high_score(self, score: int) -> bool:
         """
