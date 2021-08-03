@@ -6,9 +6,17 @@ Template for pygame games
 
 ## Setup
 
-You will need to create a virtual environment to develop or run this application:
+### Python
+
+You need Python 3.9 or greater in order to run this program.
+You can download and install Python from here: https://www.python.org/downloads/
+
+### Virtual Environment
+
+You will need to create a [virtual environment](https://docs.python.org/3/tutorial/venv.html)
+to develop or run this application:
 ```bash
-virtualenv --python=python3.9 venv
+virtualenv --python=python3 venv
 source venv/bin/activate
 ```
 
