@@ -2,7 +2,7 @@
 
 ![tox workflow](https://github.com/Tyler-Yates/pygame-template/actions/workflows/tox-workflow.yml/badge.svg)
 
-Template for pygame games
+Template video games made using the [pygame](https://www.pygame.org/news) framework.
 
 ## Setup
 

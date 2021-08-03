@@ -25,6 +25,11 @@ jobs:
         pip install tox
     - name: Run tox
       run: tox
+    # We only need code coverage from one of the jobs
+    - name: Codecov
+      uses: codecov/codecov-action@v2.0.2
+      with:
+        files: ./coverage.xml
 
   build-windows:
     runs-on: windows-latest
