@@ -1,3 +1,4 @@
+import random
 from random import randrange
 from typing import List
 
@@ -5,40 +6,45 @@ import pygame
 import pygame.gfxdraw
 from pygame.surface import Surface
 
-from mygame.src.constants.game_constants import GAME_WIDTH_PX
+from mygame.src.constants.game_constants import (
+    GAME_WIDTH_PX,
+    MAXIMUM_ASTEROID_SIZE,
+    MINIMUM_ASTEROID_SIZE,
+    MAXIMUM_ASTEROID_VERTICES,
+    MINIMUM_ASTEROID_VERTICES,
+    ASTEROID_VARIANCE,
+)
 from mygame.src.interfaces.actor import Actor
+from mygame.src.util.polygons import polygon_area, generate_polygon
 
 BASE_SPEED = 200
-MINIMUM_SIZE = 20
-MAXIMUM_SIZE = 150
 
 
 class Asteroid(Actor):
-    def __init__(self, pos_x: float = None, pos_y: float = None, size: float = None):
+    def __init__(self, pos_x: float = None, pos_y: float = None):
         super().__init__()
         if pos_x:
             self.pos_x = pos_x
         else:
             self.pos_x = randrange(0, GAME_WIDTH_PX)
 
-        if size is None:
-            self.size = randrange(MINIMUM_SIZE, MAXIMUM_SIZE)
-        else:
-            self.size = size
+        self.size = random.randint(MINIMUM_ASTEROID_SIZE, MAXIMUM_ASTEROID_SIZE)
+        num_vertices = random.randint(MINIMUM_ASTEROID_VERTICES, MAXIMUM_ASTEROID_VERTICES)
+        self.polygon = generate_polygon(num_vertices, self.size, ASTEROID_VARIANCE)
+        self.polygon_area = polygon_area(self.polygon)
 
         if pos_y:
             self.pos_y = pos_y
         else:
-            self.pos_y = -self.size * 2
+            self.pos_y = -MAXIMUM_ASTEROID_SIZE * 2
 
-        self.speed = float(MAXIMUM_SIZE - MINIMUM_SIZE) / self.size * BASE_SPEED
+        self.speed = float(MAXIMUM_ASTEROID_SIZE - MINIMUM_ASTEROID_SIZE) / self.size * BASE_SPEED
 
     def get_collision_polygon(self) -> List[List[float]]:
-        point1 = [self.pos_x - self.size, self.pos_y - self.size]
-        point2 = [self.pos_x + self.size - 3, self.pos_y - 2]
-        point3 = [self.pos_x + 2, self.pos_y + self.size]
-        point4 = [self.pos_x - 5, self.pos_y]
-        return [point1, point2, point3, point4]
+        collision_polygon_points = []
+        for point in self.polygon:
+            collision_polygon_points.append([self.pos_x + point[0], self.pos_y + point[1]])
+        return collision_polygon_points
 
     def process_input(self, events):
         pass

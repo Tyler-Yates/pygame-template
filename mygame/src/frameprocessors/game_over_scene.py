@@ -7,7 +7,7 @@ from pygame.event import Event
 from mygame.src.constants.scene_enum import SceneEnum
 from mygame.src.interfaces.scene import Scene
 from mygame.src.state.game_state import GameState
-from mygame.src.util.fonts import BASIC_FONT
+from mygame.src.util.fonts import BASIC_FONT, MONOSPACE_FONT
 
 if TYPE_CHECKING:
     from mygame.src.controllers.scene_controller import SceneController
@@ -83,13 +83,13 @@ class GameOverScene(Scene):
 
         # High Scores
         offset = 0
-        vertical_spacing = BASIC_FONT.get_rect("9", size=SCORE_TEXT_SIZE).height + 5
+        vertical_spacing = MONOSPACE_FONT.get_rect("9", size=SCORE_TEXT_SIZE).height + 5
         for score in self.game_state.high_scores.high_scores:
             high_score_text = str(score)
-            high_score_text_rect = BASIC_FONT.get_rect(high_score_text, size=SCORE_TEXT_SIZE)
+            high_score_text_rect = MONOSPACE_FONT.get_rect(high_score_text, size=SCORE_TEXT_SIZE)
             high_score_text_rect.midright = (
                 screen.get_rect().right - 100,
                 high_score_title_text_rect.bottom + 25 + offset * vertical_spacing,
             )
-            BASIC_FONT.render_to(screen, high_score_text_rect, high_score_text, "white", size=SCORE_TEXT_SIZE)
+            MONOSPACE_FONT.render_to(screen, high_score_text_rect, high_score_text, "white", size=SCORE_TEXT_SIZE)
             offset += 1

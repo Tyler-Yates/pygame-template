@@ -5,12 +5,13 @@ from typing import List, TYPE_CHECKING
 from pygame import Surface
 from pygame.event import Event
 
+from mygame.src.constants.game_constants import MAXIMUM_ASTEROID_SIZE
 from mygame.src.constants.scene_enum import SceneEnum
 from mygame.src.interfaces.scene import Scene
 from mygame.src.state.asteroid_actor import Asteroid
 from mygame.src.state.game_state import GameState
-from mygame.src.util.collisions import collides
 from mygame.src.util.fonts import BASIC_FONT
+from mygame.src.util.polygons import collides
 
 if TYPE_CHECKING:
     from mygame.src.controllers.scene_controller import SceneController
@@ -114,7 +115,7 @@ class GameScene(Scene):
         self.game_state.asteroids[:] = [
             asteroid
             for asteroid in self.game_state.asteroids
-            if asteroid.pos_y < screen.get_height() + asteroid.size * 2
+            if asteroid.pos_y < screen.get_height() + MAXIMUM_ASTEROID_SIZE * 2
         ]
 
         # Now render any asteroids left

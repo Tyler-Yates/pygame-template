@@ -1,4 +1,4 @@
-from mygame.src.util.collisions import collides
+from mygame.src.util.polygons import collides
 
 
 class TestCollisions:
