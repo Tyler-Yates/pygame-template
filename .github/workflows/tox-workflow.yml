@@ -25,7 +25,6 @@ jobs:
         pip install tox
     - name: Run tox
       run: tox
-    # We only need code coverage from one of the jobs
     - name: Codecov
       uses: codecov/codecov-action@v2.0.2
       with:
@@ -45,6 +44,10 @@ jobs:
           pip install tox
       - name: Run tox
         run: tox
+      - name: Codecov
+        uses: codecov/codecov-action@v2.0.2
+        with:
+          files: ./coverage.xml
 
   build-macos:
     runs-on: macos-latest
@@ -60,3 +63,7 @@ jobs:
           pip install tox
       - name: Run tox
         run: tox
+      - name: Codecov
+        uses: codecov/codecov-action@v2.0.2
+        with:
+          files: ./coverage.xml
