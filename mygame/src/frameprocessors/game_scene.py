@@ -10,7 +10,7 @@ from mygame.src.constants.scene_enum import SceneEnum
 from mygame.src.interfaces.scene import Scene
 from mygame.src.state.asteroid_actor import Asteroid
 from mygame.src.state.game_state import GameState
-from mygame.src.util.fonts import BASIC_FONT
+from mygame.src.util.fonts import BASIC_FONT, render_with_outline
 from mygame.src.util.polygons import collides
 
 if TYPE_CHECKING:
@@ -104,10 +104,6 @@ class GameScene(Scene):
     def render(self, screen: Surface):
         screen.fill(BACKGROUND_COLOR)
 
-        # Score in upper-left
-        score_text = SCORE_TEXT_PREFIX + str(self.game_state.score)
-        BASIC_FONT.render_to(screen, (5, 5), score_text, "white", size=SCORE_TEXT_SIZE)
-
         # Player
         self.game_state.player.render(screen)
 
@@ -121,3 +117,7 @@ class GameScene(Scene):
         # Now render any asteroids left
         for asteroid in self.game_state.asteroids:
             asteroid.render(screen)
+
+        # Score in upper-left
+        score_text = SCORE_TEXT_PREFIX + str(self.game_state.score)
+        render_with_outline(screen, BASIC_FONT, (5, 5), score_text, SCORE_TEXT_SIZE, "white", BACKGROUND_COLOR)
