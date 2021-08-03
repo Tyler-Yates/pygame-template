@@ -15,7 +15,7 @@ from mygame.src.constants.game_constants import (
     ASTEROID_VARIANCE,
 )
 from mygame.src.interfaces.actor import Actor
-from mygame.src.util.polygons import polygon_area, generate_polygon
+from mygame.src.util.polygons import generate_polygon
 
 BASE_SPEED = 200
 
@@ -31,7 +31,6 @@ class Asteroid(Actor):
         self.size = random.randint(MINIMUM_ASTEROID_SIZE, MAXIMUM_ASTEROID_SIZE)
         num_vertices = random.randint(MINIMUM_ASTEROID_VERTICES, MAXIMUM_ASTEROID_VERTICES)
         self.polygon = generate_polygon(num_vertices, self.size, ASTEROID_VARIANCE)
-        self.polygon_area = polygon_area(self.polygon)
 
         if pos_y:
             self.pos_y = pos_y

@@ -11,12 +11,13 @@ def collides(collision_polygon_1: List[List[float]], collision_polygon_2: List[L
     return polygon1.intersects(polygon2)
 
 
-def polygon_area(polygon_points: List[List[int]]) -> float:
-    polygon = Polygon(polygon_points)
-    return polygon.area
-
-
 def generate_polygon(num_vertices: int, size: int, variation: float) -> List[List[int]]:
+    # Checks on input
+    if num_vertices < 3:
+        raise ValueError("Must have at least 3 vertices")
+    if size < 2:
+        raise ValueError("Size must be greater than or equal to 2")
+
     points: List[List[int]] = []
 
     angles = []
